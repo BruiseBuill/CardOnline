@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BF;
 using DG.Tweening; 
 
 namespace CardOnline.Player
 {
-    public class CardAllignment : MonoBehaviour
+    public class CardAllignment : Single<CardAllignment>
     {
         [SerializeField] List<GameObject> cards = new List<GameObject>();
 
@@ -24,18 +25,20 @@ namespace CardOnline.Player
         [SerializeField] private int curveResolution = 50;  // 曲线分辨率
         [SerializeField] private bool showControlPoints = true; // 显示控制点
 
-        /// <summary>
-        /// 计算卡牌在弧线上的位置参数t
-        /// </summary>
-        /// <param name="cardIndex">卡牌索引</param>
-        /// <returns>贝塞尔曲线参数t</returns>
-        private float CalculateCardT(int cardIndex)
+        public Vector3 GetCentralControlPos()=>(controlPoint1.position+controlPoint2.position)/2;
+        
+        public void AddCard(GameObject card)
         {
-            return 0.5f - (cards.Count - 1) * 0.5f * baseSpacing + cardIndex * baseSpacing;
+            cards.Add(card);
+            UpdateCardPositions();
         }
-
+        public void RemoveCard(GameObject card)
+        {
+            cards.Remove(card);
+            UpdateCardPositions();
+        }
         [ContextMenu("Update")]
-        private void UpdateCardPositions()
+        public void UpdateCardPositions()
         {
             if (cards.Count == 0) return;
 
@@ -54,7 +57,15 @@ namespace CardOnline.Player
             }
         }
 
-
+        /// <summary>
+        /// 计算卡牌在弧线上的位置参数t
+        /// </summary>
+        /// <param name="cardIndex">卡牌索引</param>
+        /// <returns>贝塞尔曲线参数t</returns>
+        float CalculateCardT(int cardIndex)
+        {
+            return 0.5f - (cards.Count - 1) * 0.5f * baseSpacing + cardIndex * baseSpacing;
+        }
         /// <summary>
         /// 计算贝塞尔曲线上的点
         /// </summary>

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MagicFighting2
+namespace CardOnline.Card
 {
 	public class MagicCard : MonoBehaviour
 	{
@@ -26,6 +26,14 @@ namespace MagicFighting2
             powerText.text=cardData.power;
             coolDownText.text = cardData.coolDown;
             descriptionText.text = cardData.description;
+        }
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+        public void Hide()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

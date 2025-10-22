@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MagicFighting2
+namespace CardOnline.Card
 {
     [CreateAssetMenu(fileName = "MagicCardData", menuName = "Self/Magic2/MagicCardData")]
     public class MagicCardData : ScriptableObject
