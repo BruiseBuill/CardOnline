@@ -364,7 +364,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4424558216226109210}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!1 &4580900003867787825
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +481,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8140047507040759895}
+  - {fileID: 6232505912524606577}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -496,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92088e181e87594186174d333b4dc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 4795aefacddd66f4c8bdff7cfdb20cdc, type: 2}
+  cardData: {fileID: 11400000, guid: 9fcc9929045992f48991ff1e65e2ece7, type: 2}
   nameText: {fileID: 6875831346403245473}
   powerText: {fileID: 4280686456297569981}
   coolDownText: {fileID: 4937323068631581714}
@@ -705,6 +706,59 @@ RectTransform:
   m_AnchoredPosition: {x: -15, y: -13}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 1, y: 1}
+--- !u!1 &7500244989877698119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6232505912524606577}
+  - component: {fileID: 5409495849505469066}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6232505912524606577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7500244989877698119}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 171801985751459265}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5409495849505469066
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7500244989877698119}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.92, y: 5.48, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7662148636857271108
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,7 +825,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<sprite=0>\u5F53\u4F60\u4E0A\u56DE\u5408\u9632\u5FA1\u4E2D\u635F\u5931\u4E86\u751F\u547D\u503C\u65F6\uFF0C\u53CC\u53D1\n<sprite=1>\u9632\u5FA1\u65F6\uFF0C\u653B\u51FB\u6CD5\u672F\u7684\u529B\u91CF\u6BCF\u6BD4\u4F60\u4F4E2\u70B9\uFF0C\u51B7\u5374\u65F6\u95F4\u51CF\u4E00\u3002"
+  m_text: "<sprite=0>\u9ED1\u6D1E\\n<sprite=1>\u9ED1\u6D1E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c5faf9ef758963c48b9026bba1a3f0a0, type: 2}
   m_sharedMaterial: {fileID: 5607928793009202244, guid: c5faf9ef758963c48b9026bba1a3f0a0,
@@ -907,7 +961,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u62A4\u76FE\u62A4\u76FE"
+  m_text: "\u9ED1\u6D1E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c6c8335253cb66448f1633cc1146480, type: 2}
   m_sharedMaterial: {fileID: 5607928793009202244, guid: 6c6c8335253cb66448f1633cc1146480,
@@ -1216,7 +1270,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1747c296e597bcf46a9508465e5fc104, type: 2}
   m_sharedMaterial: {fileID: 6743249021451143500, guid: 1747c296e597bcf46a9508465e5fc104,

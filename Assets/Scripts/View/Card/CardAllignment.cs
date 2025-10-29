@@ -26,7 +26,12 @@ namespace CardOnline.Player
         [SerializeField] private bool showControlPoints = true; // 显示控制点
 
         public Vector3 GetCentralControlPos()=>(controlPoint1.position+controlPoint2.position)/2;
-        
+
+
+        private void Start()
+        {
+            UpdateCardPositions();
+        }
         public void AddCard(GameObject card)
         {
             cards.Add(card);
