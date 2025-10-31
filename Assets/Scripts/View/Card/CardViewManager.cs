@@ -15,10 +15,11 @@ namespace CardOnline.Player
         public bool isSelected = false; //是否选中
         public bool hasTarget = false; //是否有目标
 
-
         Vector3 hoverCardInitPos;
         Camera camera;
 
+        [Header("Event")]
+        [SerializeField] GenericEventChannel<bool> onCloseRaycast;
 
 
         private void Start()
@@ -38,6 +39,8 @@ namespace CardOnline.Player
                 return;
             }
 
+            onCloseRaycast.Invoke(true);
+
             isSelected = true;
             selectedCard = card;
 
@@ -55,7 +58,9 @@ namespace CardOnline.Player
             {
                 return;
             }
-            
+
+            onCloseRaycast.Invoke(false);
+
             hoverCard.Hide();
             selectedCard.Show();
             isSelected = false;
