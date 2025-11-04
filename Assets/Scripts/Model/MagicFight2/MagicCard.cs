@@ -11,14 +11,21 @@ namespace CardOnline.Card
         [SerializeField] MagicCardData cardData;
         public MagicCardData CardData => cardData;
 
+        [Header("Model")]
         public TextMeshProUGUI nameText;
         public TextMeshProUGUI powerText;
         public TextMeshProUGUI coolDownText;
         public TextMeshProUGUI descriptionText;
 
+        [Header("FightInfo")]
+        public bool isInCoolDown = false;
+        public int remainCoolingTime;
+        
+
         public void SetData(MagicCardData cardData)
         {
             this.cardData = cardData;
+            Load();
         }
         [ContextMenu("Load")]
         public void Load()
@@ -28,6 +35,7 @@ namespace CardOnline.Card
             coolDownText.text = cardData.coolDown;
             descriptionText.text = cardData.description;
         }
+
         public void Show()
         {
             gameObject.SetActive(true);

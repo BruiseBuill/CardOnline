@@ -4,19 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardOnline.Card;
 using Sirenix.OdinInspector;
+using CardOnline.Control;
+using CardOnline.View;
+using CardOnline.Character;
 
 namespace CardOnline.Player
 {
-	public class CardViewManager : Single<CardViewManager>
+	public class PlayerInput : MonoBehaviour
 	{
         public MagicCard hoverCard;
         [ReadOnly]
         public MagicCard selectedCard;
+        [ReadOnly]
+        public MagicCard observedCard;
+
         public bool isSelected = false; //是否选中
+        public bool isObserved = false;
         public bool hasTarget = false; //是否有目标
 
         Vector3 hoverCardInitPos;
         Camera camera;
+
+        [SerializeField] CardAllignment cardAllignment;
+        [SerializeField] CharacterCardController cardController;
 
         [Header("Event")]
         [SerializeField] GenericEventChannel<bool> onCloseRaycast;
@@ -36,6 +46,8 @@ namespace CardOnline.Player
             MagicCard card = RaycastCard(screenPos);
             if (card == null)
             {
+                isSelected = false;
+                isObserved = true;
                 return;
             }
 
@@ -46,7 +58,7 @@ namespace CardOnline.Player
 
             card.Hide();
 
-            float y = CardAllignment.Instance().GetCentralControlPos().y;
+            float y = cardAllignment.GetCentralControlPos().y;
             hoverCardInitPos = new Vector3(card.transform.position.x, y, -1f);
             hoverCard.transform.position = hoverCardInitPos;
             hoverCard.SetData(card.CardData);
@@ -56,13 +68,21 @@ namespace CardOnline.Player
         {
             if (!isSelected)
             {
+                if (isObserved)
+                {
+                    isObserved = false;
+                    hoverCard.Hide();
+                    observedCard = null;
+                }
                 return;
             }
-
             onCloseRaycast.Invoke(false);
-
             hoverCard.Hide();
             selectedCard.Show();
+            if (AttackCheck(pos))
+            {
+                Attack();
+            }
             isSelected = false;
             selectedCard = null;
         }
@@ -72,12 +92,48 @@ namespace CardOnline.Player
             {
                 return;
             }
-            Vector3 offset = camera.ScreenToWorldPoint(end)- camera.ScreenToWorldPoint(start);
+            Vector3 offset = camera.ScreenToWorldPoint(end) - camera.ScreenToWorldPoint(start);
             hoverCard.transform.position = hoverCardInitPos + new Vector3(offset.x, offset.y, 0);
+        }
+        private void Update()
+        {
+            if (isObserved)
+            {
+                MagicCard card = RaycastCard(Input.mousePosition);
+                if (card == null)
+                {
+                    if (observedCard != null)
+                    {
+                        hoverCard.Hide();
+                        observedCard = null;
+                    }
+                    return;
+                }
+                if (card != observedCard)
+                {
+                    observedCard = card;
+                    hoverCard.SetData(observedCard.CardData);
+                    if (observedCard.isInCoolDown)
+                    {
+                        hoverCard.transform.position = new Vector3(observedCard.transform.position.x, observedCard.transform.position.y, -1f);
+                    }
+                    else
+                    {
+                        float y = cardAllignment.GetCentralControlPos().y;
+                        hoverCardInitPos = new Vector3(card.transform.position.x, y, -1f);
+                        hoverCard.transform.position = hoverCardInitPos;                       
+                    }
+                    hoverCard.Show();
+                }
+            }
+        }
+        bool AttackCheck(Vector3 screenPos)
+        {
+            return camera.ScreenToWorldPoint(screenPos).y > 0; 
         }
         void Attack()
         {
-
+            cardController.UsingCard(selectedCard);
         }
         MagicCard RaycastCard(Vector3 pos)
         {
