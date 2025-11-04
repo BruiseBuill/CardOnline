@@ -1,4 +1,4 @@
-using BF;
+ using BF;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using CardOnline.Control;
 using CardOnline.View;
 using CardOnline.Character;
+using DG.Tweening;
 
 namespace CardOnline.Player
 {
@@ -27,6 +28,8 @@ namespace CardOnline.Player
 
         [SerializeField] CardAllignment cardAllignment;
         [SerializeField] CharacterCardController cardController;
+
+        [SerializeField] float duration = 0.5f;
 
         [Header("Event")]
         [SerializeField] GenericEventChannel<bool> onCloseRaycast;
@@ -78,7 +81,12 @@ namespace CardOnline.Player
             }
             onCloseRaycast.Invoke(false);
             hoverCard.Hide();
+
+            selectedCard.transform.position = hoverCard.transform.position;
+            selectedCard.transform.rotation = hoverCard.transform.rotation;
             selectedCard.Show();
+            cardAllignment.UpdateCardPositions();
+            
             if (AttackCheck(pos))
             {
                 Attack();
