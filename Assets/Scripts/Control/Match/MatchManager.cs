@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Test
+namespace CardOnline.Manager
 {
  	public class MatchManager : MonoBehaviour
 	{

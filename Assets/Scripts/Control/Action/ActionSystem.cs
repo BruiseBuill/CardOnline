@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CardOnline.Control
+namespace CardOnline.Character
 {
 	public abstract class GameAction
     {

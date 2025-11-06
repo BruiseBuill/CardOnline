@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardOnline.Card;
 using Sirenix.OdinInspector;
-using CardOnline.Control;
 using CardOnline.View;
 using CardOnline.Character;
-using DG.Tweening;
 
 namespace CardOnline.Player
 {
@@ -28,12 +26,12 @@ namespace CardOnline.Player
 
         [SerializeField] CardAllignment cardAllignment;
         [SerializeField] CharacterCardController cardController;
+        [SerializeField] FightControl fightControl;
 
         [SerializeField] float duration = 0.5f;
 
         [Header("Event")]
         [SerializeField] GenericEventChannel<bool> onCloseRaycast;
-
 
         private void Start()
         {
@@ -47,7 +45,7 @@ namespace CardOnline.Player
         void OnPointerDown(Vector3 screenPos)
         {
             MagicCard card = RaycastCard(screenPos);
-            if (card == null)
+            if (card == null || card.isInCoolDown) 
             {
                 isSelected = false;
                 isObserved = true;
@@ -87,9 +85,9 @@ namespace CardOnline.Player
             selectedCard.Show();
             cardAllignment.UpdateCardPositions();
             
-            if (AttackCheck(pos))
+            if (UseCardCheck(pos))
             {
-                Attack();
+                UseCard();
             }
             isSelected = false;
             selectedCard = null;
@@ -135,13 +133,14 @@ namespace CardOnline.Player
                 }
             }
         }
-        bool AttackCheck(Vector3 screenPos)
+        bool UseCardCheck(Vector3 screenPos)
         {
-            return camera.ScreenToWorldPoint(screenPos).y > 0; 
+            return camera.ScreenToWorldPoint(screenPos).y > 0 && fightControl.isNeedResponse;
         }
-        void Attack()
+        void UseCard()
         {
             cardController.UsingCard(selectedCard);
+            fightControl.UseCard(selectedCard);
         }
         MagicCard RaycastCard(Vector3 pos)
         {
