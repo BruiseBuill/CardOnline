@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7195622737694793889
+--- !u!114 &-9195973140079207732
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EdgeGlow
-  m_Shader: {fileID: -6465566751694194690, guid: c3db2caec917d364d9e84c485eb3ed52,
+  m_Name: CardGlow
+  m_Shader: {fileID: -6465566751694194690, guid: ab7e67671b95e974785a3d989a478832,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -55,12 +55,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Const_1: 1
-    - _intensity: 15.88
-    - _noiseIntensity: 0.2
-    - _noiseScale: 5
-    - _speed: 0.1
-    - _twinkleIntensity: 0.1
+    - _Const_2: 2
+    - _Const_Half: 0.5
+    - _intensity: 3
+    - _isColorFade: 0
+    - _radius: 0.12
     m_Colors:
-    - _boxSize: {r: 0.99, g: 1, b: 0, a: 0}
+    - _boxSize: {r: 0.77, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
