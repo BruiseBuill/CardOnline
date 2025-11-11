@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
-namespace BF.Tool
+namespace BF.Animation
 {
     public class UITextRoll:TweenAnimation,IPlayForward
     {

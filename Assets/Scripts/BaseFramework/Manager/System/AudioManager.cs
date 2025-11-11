@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using static UnityEditor.ObjectChangeEventStream;
 
-namespace BF
+namespace BF.Audio
 {
     public class AudioManager : Single<AudioManager>
     {

@@ -12,10 +12,16 @@ namespace BF
             if (!instance)
             {
                 instance = FindObjectOfType<T>();
-                if (FindObjectsOfType<T>().Length > 1)//
+#if UNITY_EDITOR
+                if (FindObjectsOfType<T>().Length > 1)
                 {
                     Debug.LogError("Error");
                 }
+                if (instance == null)
+                {
+                    Debug.LogError("Error Null Singleton");
+                }
+#endif
             }
             return instance;
         }

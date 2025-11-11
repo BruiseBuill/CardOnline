@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BF.Tool
+namespace BF.Animation
 {
     public abstract class TweenAnimator : MonoBehaviour 
     {

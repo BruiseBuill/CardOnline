@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Test
 {
- 	public class PlayerInput_Silence : MonoBehaviour
+ 	public class PlayerInput_Silence 
 	{
     	
 	}

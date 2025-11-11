@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BF
 {
-    #region InputProtection
     [Serializable]
     public class InputProtection
     {
@@ -13,33 +13,30 @@ namespace BF
         //Normally, action can only be done when condition=true and input
         //Advance: input before condition=true
         //Lag: input after condition=false
-        public Action<bool> onConditionChange = delegate { };
-        public Action onPlayerInput = delegate { };
-
         public Action onAct = delegate { };
 
-        public bool condition;
-        public float lastConditionTrueTime;
-        public bool hasInput;
-        public float lastInputTime;
+        [Tooltip("If AskEveryFrame, there will not be lagProtection")]
+        [SerializeField] bool ifUseEventInstandAskEveryFrame;
 
-        public float advanceProtectionTime;
-        public float lagProtectionTime;
+        [ShowIf("ifUseEventInstandAskEveryFrame")]
+        [SerializeField] bool condition;
+        [ShowIf("ifUseEventInstandAskEveryFrame")]
+        [ReadOnly] [SerializeField] float lastConditionTrueTime;
+        [ReadOnly] [SerializeField] bool hasInput;
+        [ReadOnly] [SerializeField] float lastInputTime;
 
-        public void Initialize(float advanceProtectionTime, float lagProtectionTime)
+        [SerializeField] float advanceProtectionTime;
+        [ShowIf("ifUseEventInstandAskEveryFrame")]
+        [SerializeField] float lagProtectionTime;
+        
+        public InputProtection()
         {
-            this.advanceProtectionTime = advanceProtectionTime;
-            this.lagProtectionTime = lagProtectionTime;
-
             condition = true;
-            lastConditionTrueTime = Time.time;
+            lastConditionTrueTime = 0f;
             hasInput = false;
-            lastInputTime = Time.time;
-
-            onPlayerInput += OnPlayerInput;
-            onConditionChange += OnConditionChange;
+            lastInputTime = 0f;
         }
-        void OnPlayerInput()
+        public void Input()
         {
             hasInput = true;
             lastInputTime = Time.time;
@@ -49,7 +46,7 @@ namespace BF
                 onAct.Invoke();
             }
         }
-        void OnConditionChange(bool condition)
+        public void ChangeCondition(bool condition)
         {
             if (this.condition == condition)
             {
@@ -71,5 +68,5 @@ namespace BF
             }
         }
     }
-    #endregion
+    
 }

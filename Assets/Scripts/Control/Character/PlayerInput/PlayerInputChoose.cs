@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Test
 {
- 	public class PlayerInputChoose : MonoBehaviour
+ 	public class PlayerInputChoose 
 	{
     	
 	}

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace BF
 {
+    /// <summary>
+    /// 继承此抽象类来编写存档数据内容
+    /// </summary>
     [System.Serializable]
     public abstract class BaseMomento
     {
@@ -17,7 +20,7 @@ namespace BF
         private const string manual_KEY_1 = "ManualMomento_1";
         private const string manual_KEY_2 = "ManualMomento_2";
 
-        public void CreateEmptyMomento()
+        public void CreateMomento()
         {
 
         }

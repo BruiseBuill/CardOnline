@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace BF 
+namespace BF
 {
     public class PoolManager : Single<PoolManager>
     {
+        [SerializeField] Pool[] characterPool;
         [SerializeField] Pool[] itemPool;
         [SerializeField] Pool[] vfxPool;
-        [SerializeField] Pool[] characterPool;
-        [SerializeField]
-        Pool[] uiPool;
+        [SerializeField] Pool[] uiPool;
 
         Dictionary<string, Pool> dictionary = new Dictionary<string, Pool>();
 

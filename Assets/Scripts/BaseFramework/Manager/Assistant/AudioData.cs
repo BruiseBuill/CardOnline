@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace BF
+namespace BF.Audio
 {
 	[CreateAssetMenu(fileName = "AudioData",menuName ="BF/AudioData")]
 	public class AudioData : ScriptableObject

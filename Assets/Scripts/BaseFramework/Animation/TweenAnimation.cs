@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace BF.Tool
+namespace BF.Animation
 {
 	public abstract class TweenAnimation : MonoBehaviour
 	{

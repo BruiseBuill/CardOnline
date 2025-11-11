@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace BF.Tool
+namespace BF.Animation
 {
     public class UITweenScale : TweenAnimation, IPlayForward, IPlayReverse
     {

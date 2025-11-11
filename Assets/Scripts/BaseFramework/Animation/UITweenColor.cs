@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace BF.Tool
+namespace BF.Animation
 {
     public class UITweenUIColor : TweenAnimation, IPlayForward, IPlayReverse
     {

@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 namespace BF
 {
+    public enum KeyCondition { Down, Up }
+
     public class InputManager : Single<InputManager>
     {
         [SerializeField] bool canMouseInput = true;
@@ -58,23 +60,6 @@ namespace BF
         //
         Dictionary<string, KeyEvent> keyEventDic = new Dictionary<string, KeyEvent>();
 
-        public ref Action GetKeyEvent(KeyCode keyCode, KeyCondition keyCondition)
-        {
-            string keyName = keyCode.ToString() + keyCondition.ToString();
-            if (!keyEventDic.ContainsKey(keyName))
-            {
-                switch (keyCondition)
-                {
-                    case KeyCondition.Up:
-                        keyEventDic.Add(keyName, new KeyEventUp(keyCode, keyCondition));
-                        break;
-                    case KeyCondition.Down:
-                        keyEventDic.Add(keyName, new KeyEventDown(keyCode, keyCondition));
-                        break;
-                }
-            }
-            return ref keyEventDic[keyName].onKey;
-        }
 
         private void Awake()
         {
@@ -184,19 +169,34 @@ namespace BF
         }
         void KeyboardCheck()
         {
-            foreach(var pair in keyEventDic)
+            foreach (var pair in keyEventDic)
             {
                 pair.Value.Check();
             }
         }
+
+        //Get Keyboard Event by this method, it will create new action if null
+        public ref Action GetKeyEvent(KeyCode keyCode, KeyCondition keyCondition)
+        {
+            string keyName = keyCode.ToString() + keyCondition.ToString();
+            if (!keyEventDic.ContainsKey(keyName))
+            {
+                keyEventDic.Add(keyName, new KeyEvent(keyCode, keyCondition));
+            }
+            return ref keyEventDic[keyName].onKey;
+        }
+        public void ClearKeyDictionary()
+        {
+            keyEventDic.Clear();
+        }
+        
         bool TouchPortCheck(Vector3 mousePos)
         {
             return mousePos.x > minScreenPort.x && mousePos.x < maxScreenPort.x && mousePos.y > minScreenPort.y && mousePos.y < maxScreenPort.y && !EventSystem.current.IsPointerOverGameObject();
         }
-
-
+        
         [Serializable]
-        abstract class KeyEvent
+        class KeyEvent
         {
             public Action onKey = delegate { };
             [SerializeField] protected KeyCode keyCode;
@@ -207,26 +207,20 @@ namespace BF
                 this.keyCode = keyCode;
                 this.condition = condition;
             }
-            public abstract void Check();
-        }
-        class KeyEventUp : KeyEvent
-        {
-            public KeyEventUp(KeyCode keyCode, KeyCondition condition) : base(keyCode, condition) { }
-            public override void Check()
+            public void Check()
             {
-                if (Input.GetKeyUp(keyCode))
+                if (condition == KeyCondition.Down && Input.GetKeyDown(keyCode)) 
+                {
                     onKey.Invoke();
+                    return;
+                }
+                else if(condition == KeyCondition.Up && Input.GetKeyUp(keyCode))
+                {
+                    onKey.Invoke();
+                    return;
+                }
             }
         }
-        class KeyEventDown : KeyEvent
-        {
-            public KeyEventDown(KeyCode keyCode, KeyCondition condition) : base(keyCode, condition) { }
-            public override void Check()
-            {
-                if (Input.GetKeyDown(keyCode))
-                    onKey.Invoke();
-            }
-        }  
     }
 
 

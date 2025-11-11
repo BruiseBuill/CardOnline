@@ -4,6 +4,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace CardOnline
+{
+    public enum LayerOrder
+    {
+        BG=0,
+        Model=10,
+        UI=20,
+        ModelOnUI=30
+    }
+}
+
 namespace CardOnline.Card
 {
 	public class MagicCard : MonoBehaviour
@@ -16,12 +27,16 @@ namespace CardOnline.Card
         public TextMeshProUGUI powerText;
         public TextMeshProUGUI coolDownText;
         public TextMeshProUGUI descriptionText;
+        public Canvas canvas;
 
         [Header("FightInfo")]
         public bool isInCoolDown = false;
         public int remainCoolingTime;
-        
 
+        private void Start()
+        {
+            SetSortingLOrder((int)LayerOrder.Model);
+        }
         public void SetData(MagicCardData cardData)
         {
             this.cardData = cardData;
@@ -43,6 +58,11 @@ namespace CardOnline.Card
         public void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        public void SetSortingLOrder(int order)
+        {
+            canvas.sortingOrder = order;
         }
     }
 }
