@@ -39,10 +39,6 @@ namespace BF
                 dictionary.Add(uiPool[i].prefab.name, uiPool[i]);
             }
         }
-        private void Start()
-        {
-            TransitManager.Instance().onSceneUnload += RecycleAll;
-        }
         public GameObject Release(string a)
         {
 #if UNITY_EDITOR
@@ -82,10 +78,6 @@ namespace BF
                 uiPool[i].Recycle();
             }
 
-        }
-        private void OnDisable()
-        {
-            TransitManager.Instance().onSceneUnload -= RecycleAll;
         }
         [Serializable]
         class Pool

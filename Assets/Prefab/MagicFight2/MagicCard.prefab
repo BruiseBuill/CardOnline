@@ -502,6 +502,9 @@ MonoBehaviour:
   powerText: {fileID: 4280686456297569981}
   coolDownText: {fileID: 4937323068631581714}
   descriptionText: {fileID: 4496830645635566567}
+  canvas: {fileID: 2306449753621193206}
+  isInCoolDown: 0
+  remainCoolingTime: 0
 --- !u!212 &7664968159735934750
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -6,12 +6,14 @@ using CardOnline.Card;
 using Sirenix.OdinInspector;
 using CardOnline.View;
 using CardOnline.Character;
+using System;
 
 namespace CardOnline.Player
 {
- 	public class PlayerInput_Fight 
-	{
-        public MagicCard hoverCard;
+    [Serializable]
+ 	public class PlayerInput_Fight : PlayerInputMode
+    {
+        public HoverCard hoverCard;
         [ReadOnly]
         public MagicCard selectedCard;
         [ReadOnly]
@@ -21,7 +23,7 @@ namespace CardOnline.Player
         public bool isObserved = false;
         public bool hasTarget = false; //是否有目标
 
-        Vector3 hoverCardInitPos;
+        Vector3 hoverCardPos;
         Camera camera;
 
         [SerializeField] CardAllignment cardAllignment;
@@ -33,7 +35,12 @@ namespace CardOnline.Player
         [Header("Event")]
         [SerializeField] GenericEventChannel<bool> onCloseRaycast;
 
-        private void Start()
+        public PlayerInput_Fight(PlayerInput playerInput) : base(playerInput)
+        {
+
+        }
+
+        public override void EnterInputMode()
         {
             camera = Camera.main;
             hoverCard.Hide();
@@ -42,7 +49,14 @@ namespace CardOnline.Player
             InputManager.onPointerUp += OnPointerUp;
             InputManager.onDrag += OnPointerDrag;
         }
-        void OnPointerDown(Vector3 screenPos)
+        public override void ExitInputMode()
+        {
+            hoverCard.Hide();
+            InputManager.onPointerDown -= OnPointerDown;
+            InputManager.onPointerUp -= OnPointerUp;
+            InputManager.onDrag -= OnPointerDrag;
+        }
+        public override void OnPointerDown(Vector3 screenPos)
         {
             MagicCard card = RaycastCard(screenPos);
             if (card == null || card.isInCoolDown)
@@ -60,12 +74,10 @@ namespace CardOnline.Player
             card.Hide();
 
             float y = cardAllignment.GetCentralControlPos().y;
-            hoverCardInitPos = new Vector3(card.transform.position.x, y, -1f);
-            hoverCard.transform.position = hoverCardInitPos;
-            hoverCard.SetData(card.CardData);
-            hoverCard.Show();
+            hoverCardPos = new Vector3(card.transform.position.x, y, -1f);
+            hoverCard.Show(card, hoverCardPos);
         }
-        void OnPointerUp(Vector3 pos)
+        public override void OnPointerUp(Vector3 pos)
         {
             if (!isSelected)
             {
@@ -81,7 +93,7 @@ namespace CardOnline.Player
             hoverCard.Hide();
 
             selectedCard.transform.position = hoverCard.transform.position;
-            selectedCard.transform.rotation = hoverCard.transform.rotation;
+            selectedCard.transform.rotation = Quaternion.identity;
             selectedCard.Show();
             cardAllignment.UpdateCardPositions();
 
@@ -92,16 +104,16 @@ namespace CardOnline.Player
             isSelected = false;
             selectedCard = null;
         }
-        void OnPointerDrag(Vector3 start, Vector3 end)
+        public override void OnPointerDrag(Vector3 start, Vector3 end)
         {
             if (!isSelected)
             {
                 return;
             }
             Vector3 offset = camera.ScreenToWorldPoint(end) - camera.ScreenToWorldPoint(start);
-            hoverCard.transform.position = hoverCardInitPos + new Vector3(offset.x, offset.y, 0);
+            hoverCard.ChangePosition(hoverCardPos + new Vector3(offset.x, offset.y, 0));
         }
-        private void Update()
+        public override void OnUpdate()
         {
             if (isObserved)
             {
@@ -118,18 +130,16 @@ namespace CardOnline.Player
                 if (card != observedCard)
                 {
                     observedCard = card;
-                    hoverCard.SetData(observedCard.CardData);
                     if (observedCard.isInCoolDown)
                     {
-                        hoverCard.transform.position = new Vector3(observedCard.transform.position.x, observedCard.transform.position.y, -1f);
+                        hoverCardPos = new Vector3(observedCard.transform.position.x, observedCard.transform.position.y, -1f);
                     }
                     else
                     {
                         float y = cardAllignment.GetCentralControlPos().y;
-                        hoverCardInitPos = new Vector3(card.transform.position.x, y, -1f);
-                        hoverCard.transform.position = hoverCardInitPos;
+                        hoverCardPos = new Vector3(card.transform.position.x, y, -1f);
                     }
-                    hoverCard.Show();
+                    hoverCard.Show(observedCard, hoverCardPos);
                 }
             }
         }

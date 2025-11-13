@@ -7,6 +7,9 @@ namespace CardOnline.UI
 {
 	public class UI_Select : MonoBehaviour
 	{
-		EventChannel 
+		[SerializeField] GenericEventChannel<int> ch_Accelerate;
+		[SerializeField] EventChannel ch_EndAccelerate;
+
+
 	}
 }
