@@ -10,6 +10,7 @@ namespace CardOnline.Character
 		public bool isNeedResponse => isNeedAttack || isNeedDefense;
 		public bool isNeedAttack;
 		public bool isNeedDefense;
+		public bool isNeedSelect;
 
 		public void UseCard(MagicCard magicCard)
 		{

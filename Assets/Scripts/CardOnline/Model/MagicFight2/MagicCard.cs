@@ -35,7 +35,7 @@ namespace CardOnline.Card
 
         private void Start()
         {
-            SetSortingLOrder((int)LayerOrder.Model);
+            SetSortingOrder((int)LayerOrder.Model);
         }
         public void SetData(MagicCardData cardData)
         {
@@ -60,7 +60,7 @@ namespace CardOnline.Card
             gameObject.SetActive(false);
         }
 
-        public void SetSortingLOrder(int order)
+        public void SetSortingOrder(int order)
         {
             canvas.sortingOrder = order;
         }

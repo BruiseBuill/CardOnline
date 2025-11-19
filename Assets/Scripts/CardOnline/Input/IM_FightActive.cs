@@ -8,15 +8,15 @@ namespace CardOnline
     [CreateAssetMenu(fileName = "FightActive", menuName = "CardOnline/Input/FightActive")]
     public class IM_FightActive : Input2ActMode
     {
-        [SerializeField] GenericEventChannel<Vector3> ch_OnSelect;
-        [SerializeField] GenericEventChannel<Vector3> ch_OnUnselect;
-        [SerializeField] GenericEventChannel<Vector3,Vector3> ch_OnDrag;
+        [SerializeField] GenericEventChannel<Vector3> ch_OnNormalPressDown;
+        [SerializeField] GenericEventChannel<Vector3> ch_OnNormalPressUp;
+        [SerializeField] GenericEventChannel<Vector3,Vector3> ch_OnNormalDrag;
 
         public override void SetActMode()
         {
-            InputManager.onPointerDown += (screenPos) => ch_OnSelect.Invoke(screenPos);
-            InputManager.onPointerUp += (screenPos)=> ch_OnUnselect.Invoke(screenPos);
-            InputManager.onDrag += (start, end) => ch_OnDrag.Invoke(start, end);
+            InputManager.onPointerDown += (screenPos) => ch_OnNormalPressDown.Invoke(screenPos);
+            InputManager.onPointerUp += (screenPos)=> ch_OnNormalPressUp.Invoke(screenPos);
+            InputManager.onDrag += (start, end) => ch_OnNormalDrag.Invoke(start, end);
         }
 
         public override void UnSetActMode()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using BF;
 
 namespace CardOnline.View
 {
@@ -17,13 +18,55 @@ namespace CardOnline.View
         [SerializeField] Transform point_3;
         [SerializeField] Transform point_4;
 
-        [SerializeField] float spacing = 0.5f;
+        [SerializeField] float normalSpacing = 0.5f;
+        [SerializeField] float expandSpacing = 3f;
+        float presentSpacing = 0.5f;
+
 
         [SerializeField] float duration = 1f;
         [SerializeField] Vector3 scale = new Vector3(1, 1, 1);
 
         [SerializeField] CardAllignment cardAllignment;
 
+        [Header("In_Event")]
+        [SerializeField] GenericEventChannel<int> ch_Accelerate;
+        [SerializeField] EventChannel ch_EndAccelerate;
+
+        private void Start()
+        {
+            ch_Accelerate.AddListener(Expand);
+            ch_EndAccelerate.AddListener(EndExpand);
+
+            presentSpacing = normalSpacing;
+        }
+        void Expand(int playerIndex)
+        {
+            presentSpacing = expandSpacing;
+            UpdateAll();
+        }
+        void EndExpand()
+        {
+            presentSpacing = normalSpacing;
+            UpdateAll();
+        }
+
+        void UpdateAll()
+        {
+            UpdateColumn(cards_1, point_1);
+            UpdateColumn(cards_2, point_2);
+            UpdateColumn(cards_3, point_3);
+            UpdateColumn(cards_4, point_4);
+        }
+        void UpdateColumn(List<GameObject> cards, Transform startPoint)
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                Vector3 targetPos = startPoint.position + new Vector3(0, -i * presentSpacing, -0.02f);
+                cards[i].transform.DOMove(targetPos, duration);
+                cards[i].transform.DORotate(Vector3.zero, duration);
+            }
+        }
+        #region Accelerate and Slow
         public void AccelerateAll()
         {
             AccelerateArea(1);
@@ -61,7 +104,7 @@ namespace CardOnline.View
                     break;
             }
         }
-        public void AccelerateOneCard(GameObject card,int remainCD)
+        public void AccelerateOneCard(GameObject card, int remainCD)
         {
             if (remainCD > 1)
             {
@@ -74,7 +117,7 @@ namespace CardOnline.View
                 cardAllignment.AddCard(card);
             }
         }
-        public void SlowOneCard(GameObject card,int remainCD)
+        public void SlowOneCard(GameObject card, int remainCD)
         {
             RemoveCard(card, remainCD);
             AddCard(card, remainCD + 1);
@@ -103,15 +146,7 @@ namespace CardOnline.View
                     break;
             }
         }
-        void UpdateCardPositions(List<GameObject> cards, Transform startPoint)
-        {
-            for (int i = 0; i < cards.Count; i++)
-            {
-                Vector3 targetPos = startPoint.position + new Vector3(0, -i * spacing, -0.02f);
-                cards[i].transform.DOMove(targetPos, duration);
-                cards[i].transform.DORotate(Vector3.zero, duration);
-            }
-        }
+        #endregion
         #region Add and Remove
         public void AddCard(GameObject card, int cd)
         {
@@ -120,19 +155,19 @@ namespace CardOnline.View
             {
                 case 1:
                     cards_1.Add(card);
-                    UpdateCardPositions(cards_1, point_1);
+                    UpdateColumn(cards_1, point_1);
                     break;
                 case 2:
                     cards_2.Add(card);
-                    UpdateCardPositions(cards_2, point_2);
+                    UpdateColumn(cards_2, point_2);
                     break;
                 case 3:
                     cards_3.Add(card);
-                    UpdateCardPositions(cards_3, point_3);
+                    UpdateColumn(cards_3, point_3);
                     break;
                 case 4:
                     cards_4.Add(card);
-                    UpdateCardPositions(cards_4, point_4);
+                    UpdateColumn(cards_4, point_4);
                     break;
             }
         }
@@ -143,19 +178,19 @@ namespace CardOnline.View
             {
                 case 1:
                     cards_1.Remove(card);
-                    UpdateCardPositions(cards_1, point_1);
+                    UpdateColumn(cards_1, point_1);
                     break;
                 case 2:
                     cards_2.Remove(card);
-                    UpdateCardPositions(cards_2, point_2);
+                    UpdateColumn(cards_2, point_2);
                     break;
                 case 3:
                     cards_3.Remove(card);
-                    UpdateCardPositions(cards_3, point_3);
+                    UpdateColumn(cards_3, point_3);
                     break;
                 case 4:
                     cards_4.Remove(card);
-                    UpdateCardPositions(cards_4, point_4);
+                    UpdateColumn(cards_4, point_4);
                     break;
             }
         }

@@ -9,10 +9,9 @@ namespace CardOnline.Character
 {
 	public class CharacterCardController : MonoBehaviour
 	{
-        [SerializeField] EventChannel ch_StartTurn;
-		[SerializeField] EventChannel ch_EndTurn;
         [SerializeField] CardAllignment cardAllignment;
         [SerializeField] CoolDownAlligement coolDownAlligement;
+        [SerializeField] int playerIndex = 0;
 
         [SerializeField] List<MagicCard> handCardsList;
         [SerializeField] List<MagicCard> coolCards_1;
@@ -20,15 +19,25 @@ namespace CardOnline.Character
         [SerializeField] List<MagicCard> coolCards_3;
         [SerializeField] List<MagicCard> coolCards_4;
 
+        [Header("In_Event")]
+        [SerializeField] EventChannel ch_StartTurn;
+        [SerializeField] EventChannel ch_EndTurn;
+        [SerializeField] GenericEventChannel<int> ch_Accelerate;
+        [SerializeField] EventChannel ch_EndAccelerate;
+
         private void Start()
         {
             ch_StartTurn.AddListener(OnStartTurn);
             ch_EndTurn.AddListener(OnEndTurn);
+            ch_Accelerate.AddListener(OnAccelerate);
+            ch_EndAccelerate.AddListener(OnEndAccelerate);
         }
         private void OnDestroy()
         {
             ch_StartTurn.RemoveListener(OnStartTurn);
             ch_EndTurn.RemoveListener(OnEndTurn);
+            ch_Accelerate.RemoveListener(OnAccelerate);
+            ch_EndAccelerate.RemoveListener(OnEndAccelerate);
         }
         void OnStartTurn()
         {
@@ -56,9 +65,44 @@ namespace CardOnline.Character
                 card.remainCoolingTime = 3;
             }
         }
-		private void OnEndTurn()
+		void OnEndTurn()
 		{
             
+        }
+        void OnAccelerate(int playerIndex)
+        {
+            ChangeCoolingCardLayerOrder((int)LayerOrder.ModelOnUI);
+        }
+        void OnEndAccelerate()
+        {
+            
+            ChangeCoolingCardLayerOrder((int)LayerOrder.Model);
+        }
+        void ChangeHandCardLayerOrder(int order)
+        {
+            foreach(var card in handCardsList)
+            {
+                card.SetSortingOrder(order);
+            }
+        }
+        void ChangeCoolingCardLayerOrder(int order)
+        {
+            foreach (var card in coolCards_1)
+            {
+                card.SetSortingOrder(order);
+            }
+            foreach (var card in coolCards_2)
+            {
+                card.SetSortingOrder(order);
+            }
+            foreach (var card in coolCards_3)
+            {
+                card.SetSortingOrder(order);
+            }
+            foreach (var card in coolCards_4)
+            {
+                card.SetSortingOrder(order);
+            }   
         }
         public void UsingCard(MagicCard card)
         {

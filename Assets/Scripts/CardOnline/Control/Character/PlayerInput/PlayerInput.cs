@@ -17,8 +17,8 @@ namespace CardOnline.Player
         [ReadOnly]
         public MagicCard observedCard;
 
-        public bool isSelected = false; //�Ƿ�ѡ��
-        public bool hasTarget = false; //�Ƿ���Ŀ��
+        public bool isSelected = false; 
+        public bool hasTarget = false; 
 
         Vector3 hoverCardPos;
         Camera camera;
@@ -30,13 +30,15 @@ namespace CardOnline.Player
         [SerializeField] float duration = 0.5f;
 
         [Header("In_Event")]
-        [SerializeField] GenericEventChannel<Vector3> ch_OnSelect;
-        [SerializeField] GenericEventChannel<Vector3> ch_OnUnselect;
-        [SerializeField] GenericEventChannel<Vector3, Vector3> ch_OnDrag;
-        [SerializeField] GenericEventChannel<Vector3> ch_OnClick;
+        [SerializeField] GenericEventChannel<Vector3> ch_OnNormalPressDown;
+        [SerializeField] GenericEventChannel<Vector3> ch_OnNormalPressUp;
+        [SerializeField] GenericEventChannel<Vector3, Vector3> ch_OnNormalDrag;
+        [SerializeField] GenericEventChannel<Vector3> ch_OnSelectClick;
+        
 
         [Header("Out_Event")]
         [SerializeField] GenericEventChannel<bool> onCloseRaycast;
+        [SerializeField] GenericEventChannel<MagicCard> onSelectCard;
 
 
         void Start()
@@ -44,18 +46,18 @@ namespace CardOnline.Player
             camera = Camera.main;
             hoverCard.Hide();
 
-            ch_OnSelect.AddListener(OnSelect);
-            ch_OnUnselect.AddListener(OnUnSelect);
-            ch_OnDrag.AddListener(OnPointerDrag);
+            ch_OnNormalPressDown.AddListener(NormalPressDown);
+            ch_OnNormalPressUp.AddListener(NormalPressUp);
+            ch_OnNormalDrag.AddListener(OnNormalDrag);
         }
         void OnDestroy()
         {
             hoverCard.Hide();
-            ch_OnSelect.RemoveListener(OnSelect);
-            ch_OnUnselect.RemoveListener(OnUnSelect);
-            ch_OnDrag.RemoveListener(OnPointerDrag);
+            ch_OnNormalPressDown.RemoveListener(NormalPressDown);
+            ch_OnNormalPressUp.RemoveListener(NormalPressUp);
+            ch_OnNormalDrag.RemoveListener(OnNormalDrag);
         }
-        void OnSelect(Vector3 screenPos)
+        void NormalPressDown(Vector3 screenPos)
         {
             MagicCard card = RaycastCard(screenPos);
             if (card == null)
@@ -82,7 +84,7 @@ namespace CardOnline.Player
             hoverCardPos = new Vector3(card.transform.position.x, y, -1f);
             hoverCard.Show(card, hoverCardPos);
         }
-        void OnUnSelect(Vector3 screenPos)
+        void NormalPressUp(Vector3 screenPos)
         {
             if (isSelected)
             {
@@ -116,7 +118,7 @@ namespace CardOnline.Player
                 observedCard = null;
         }
         #region Drag
-        void OnPointerDrag(Vector3 start, Vector3 end)
+        void OnNormalDrag(Vector3 start, Vector3 end)
         {
             if (isSelected)
             {
@@ -160,6 +162,18 @@ namespace CardOnline.Player
             hoverCard.ChangePosition(hoverCardPos + new Vector3(offset.x, offset.y, 0));
         }
         #endregion
+
+        void SelectClick(Vector3 screenPos)
+        {
+            var card = RaycastCard(screenPos);
+            if (card != null)
+            {
+                onSelectCard.Invoke()
+            }
+        }
+
+
+
         bool UseCardCheck(Vector3 screenPos)
         {
             return camera.ScreenToWorldPoint(screenPos).y > 0 && fightControl.isNeedResponse;
@@ -172,9 +186,9 @@ namespace CardOnline.Player
 
 
 
-        MagicCard RaycastCard(Vector3 pos)
+        MagicCard RaycastCard(Vector3 screenPos)
         {
-            Ray ray = new Ray(camera.ScreenToWorldPoint(pos), Vector3.forward);
+            Ray ray = new Ray(camera.ScreenToWorldPoint(screenPos), Vector3.forward);
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 10f);
 
             if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity))
