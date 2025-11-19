@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CardOnline.Player
+namespace CardOnline.Manager
 {
- 	public class PlayerInput_Select : PlayerInputMode
-    {
+ 	public class MatchManager : MonoBehaviour
+	{
     	
 	}
 }
