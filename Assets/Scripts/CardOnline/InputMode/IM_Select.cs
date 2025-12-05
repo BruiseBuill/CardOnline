@@ -11,18 +11,27 @@ namespace CardOnline
         [SerializeField] GenericEventChannel<Vector3> ch_OnSelectPressDown;
         [SerializeField] GenericEventChannel<Vector3> ch_OnSelectClick;
 
+        [SerializeField] EventChannel ch_EndAccelerate;
+
         public override void SetActMode()
         {
-            InputManager.onPointerDown
+            InputManager.onPointerDown += (screenPos) => ch_OnSelectPressDown.Invoke(screenPos);
             InputManager.onClick += (screenPos) => ch_OnSelectClick.Invoke(screenPos);
+            ch_EndAccelerate.AddListener(EndAccelerate);
         }
         public override void UnSetActMode()
         {
+            InputManager.onPointerDown =delegate { };
             InputManager.onClick = delegate { };
+            ch_EndAccelerate.RemoveListener(EndAccelerate);
         }
         public override void Update()
         {
 
+        }
+        void EndAccelerate() 
+        {
+            CursorManager.Instance().ChangeAct(0);
         }
     }
 }

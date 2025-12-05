@@ -1,15 +1,14 @@
- using BF;
+using BF;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CardOnline.Card;
 using Sirenix.OdinInspector;
-using CardOnline.View;
 using CardOnline.Character;
 
-namespace CardOnline.Player
+namespace CardOnline.Character
 {
-	public class PlayerInput : MonoBehaviour
+	public class PlayerInput : CharacterInput
 	{
         public HoverCard hoverCard;
         [ReadOnly]
@@ -23,9 +22,9 @@ namespace CardOnline.Player
         Vector3 hoverCardPos;
         Camera camera;
 
+        CharacterData characterData;
         [SerializeField] CardAllignment cardAllignment;
-        [SerializeField] CharacterCardController cardController;
-        [SerializeField] FightControl fightControl;
+        [SerializeField] CharacterCardSystem cardController;
 
         [SerializeField] float duration = 0.5f;
 
@@ -49,6 +48,7 @@ namespace CardOnline.Player
             ch_OnNormalPressDown.AddListener(NormalPressDown);
             ch_OnNormalPressUp.AddListener(NormalPressUp);
             ch_OnNormalDrag.AddListener(OnNormalDrag);
+            ch_OnSelectClick.AddListener(SelectClick);
         }
         void OnDestroy()
         {
@@ -56,6 +56,7 @@ namespace CardOnline.Player
             ch_OnNormalPressDown.RemoveListener(NormalPressDown);
             ch_OnNormalPressUp.RemoveListener(NormalPressUp);
             ch_OnNormalDrag.RemoveListener(OnNormalDrag);
+            ch_OnSelectClick.RemoveListener(SelectClick);
         }
         void NormalPressDown(Vector3 screenPos)
         {
@@ -168,7 +169,7 @@ namespace CardOnline.Player
             var card = RaycastCard(screenPos);
             if (card != null)
             {
-                onSelectCard.Invoke()
+                onSelectCard.Invoke();
             }
         }
 

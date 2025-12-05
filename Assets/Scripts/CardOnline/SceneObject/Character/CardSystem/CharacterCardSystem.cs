@@ -1,13 +1,12 @@
 using BF;
 using CardOnline.Card;
-using CardOnline.View;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace CardOnline.Character
 {
-	public class CharacterCardController : MonoBehaviour
+	public class CharacterCardSystem : MonoBehaviour
 	{
         [SerializeField] CardAllignment cardAllignment;
         [SerializeField] CoolDownAlligement coolDownAlligement;
@@ -75,7 +74,6 @@ namespace CardOnline.Character
         }
         void OnEndAccelerate()
         {
-            
             ChangeCoolingCardLayerOrder((int)LayerOrder.Model);
         }
         void ChangeHandCardLayerOrder(int order)

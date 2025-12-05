@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using BF;
 
-namespace CardOnline.View
+namespace CardOnline.Character
 {
 	public class CoolDownAlligement : MonoBehaviour
 	{

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CardOnline.Manager
+namespace CardOnline.Character
 {
- 	public class MatchManager : MonoBehaviour
+	public class CharacterInput : BaseComponent
 	{
-    	
+		
 	}
 }

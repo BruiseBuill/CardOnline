@@ -4,9 +4,9 @@ using UnityEngine;
 using BF;
 using DG.Tweening; 
 
-namespace CardOnline.View
+namespace CardOnline.Character
 {
-    public class CardAllignment : MonoBehaviour
+    public class CardAllignment : BaseComponent
     {
         [SerializeField] List<GameObject> cards = new List<GameObject>();
 

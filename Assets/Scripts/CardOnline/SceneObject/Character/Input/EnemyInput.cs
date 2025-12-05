@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CardOnline.AI
+namespace CardOnline.Character
 {
-	public class EnemyInput : MonoBehaviour
+	public class EnemyInput : CharacterInput
 	{
 		
 	}

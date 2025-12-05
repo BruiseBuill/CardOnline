@@ -13,7 +13,6 @@ namespace BF
         {
             data = GetComponentInChildren<BaseShareData>();
             data.Register(this, priority);
-            Debug.Log(3);
         }
         public abstract void Open();
         public abstract void Close();

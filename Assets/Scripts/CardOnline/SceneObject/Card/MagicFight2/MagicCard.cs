@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using CardOnline.Character;
 
 namespace CardOnline
 {
@@ -30,12 +31,21 @@ namespace CardOnline.Card
         public Canvas canvas;
 
         [Header("FightInfo")]
+        public CharacterControl characterControl;
         public bool isInCoolDown = false;
         public int remainCoolingTime;
 
         private void Start()
         {
             SetSortingOrder((int)LayerOrder.Model);
+            if (characterControl == null)
+            {
+                characterControl = GameObject.FindFirstObjectByType<CharacterControl>();
+            }
+        }
+        public void Open()
+        {
+
         }
         public void SetData(MagicCardData cardData)
         {
