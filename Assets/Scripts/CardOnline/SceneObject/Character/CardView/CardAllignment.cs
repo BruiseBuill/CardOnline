@@ -28,6 +28,7 @@ namespace CardOnline.Character
         public Vector3 GetCentralControlPos()=>(controlPoint1.position+controlPoint2.position)/2;
 
 
+
         private void Start()
         {
             UpdateCardPositions();
