@@ -1,0 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace CardOnline
+{
+ 	public class IM_FightSilence : MonoBehaviour
+	{
+    	
+	}
+}
