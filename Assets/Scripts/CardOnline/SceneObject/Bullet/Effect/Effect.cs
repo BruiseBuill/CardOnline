@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Test
+namespace CardOnline.Bullet
 {
 	public class Effect : MonoBehaviour
 	{

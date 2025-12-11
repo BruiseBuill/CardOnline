@@ -10,7 +10,7 @@ namespace CardOnline.Character
 	public class CharacterControl : BaseControl
 	{
 		CharacterData characterData;
-		protected CharacterCardSystem characterCardSystem;
+		public CharacterData Data => characterData;
 
 
 		[Header("Event")]

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Test
+namespace CardOnline.Bullet
 {
-	public class Bullet : MonoBehaviour
+	public class BaseBullet : MonoBehaviour
 	{
 		
 	}

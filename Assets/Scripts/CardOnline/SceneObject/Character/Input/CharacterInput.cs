@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BF;
 
 namespace CardOnline.Character
 {
-	public class CharacterInput : BaseComponent
+	public abstract class CharacterInput : BaseComponent
 	{
 		
 	}

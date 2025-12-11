@@ -1,5 +1,6 @@
 using BF;
 using CardOnline.Card;
+using CardOnline.Character;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,25 +10,27 @@ namespace CardOnline
     [CreateAssetMenu(fileName = "FightActive", menuName = "CardOnline/Input/FightActive")]
     public class IM_FightActive : Input2ActMode
     {
-        [SerializeField] GenericEventChannel<Vector3> ch_OnNormalPressDown;
-        [SerializeField] GenericEventChannel<Vector3> ch_OnNormalPressUp;
-        [SerializeField] GenericEventChannel<Vector3,Vector3> ch_OnNormalDrag;
-
         [SerializeField] GenericEventChannel<Vector3> ch_Accelerate;
-
-
-
+        //
+        [SerializeField] GenericEventChannel<object> ch_onScanCard;
+        [SerializeField] EventChannel ch_onScanCardEnd;
+        [SerializeField] GenericEventChannel<object> ch_onPullCard;
+        [SerializeField] EventChannel ch_onPullCardEnd;
+        [SerializeField] GenericEventChannel<Vector3,Vector3> ch_onDragCard;
 
         //
-        [SerializeField] GenericEventChannel<> ch_onScanCard;
-        [SerializeField]
+        [SerializeField] bool isInScan;
+        [SerializeField] bool isPullingCard;
+
         [SerializeField] LayerMask cardLayer;
 
         public override void SetActMode()
         {
-            InputManager.onPointerDown += (screenPos) => ch_OnNormalPressDown.Invoke(screenPos);
-            InputManager.onPointerUp += (screenPos)=> ch_OnNormalPressUp.Invoke(screenPos);
-            InputManager.onDrag += (start, end) => ch_OnNormalDrag.Invoke(start, end);
+            InputManager.onPointerDown += OnPointDown;
+            InputManager.onPointerUp += OnPointUp;
+            InputManager.onDrag += OnDrag;
+
+
             ch_Accelerate.AddListener(Accelerate);
         }
 
@@ -36,16 +39,66 @@ namespace CardOnline
             InputManager.onPointerDown = delegate { };
             InputManager.onPointerUp = delegate { };
             InputManager.onDrag = delegate { };
+
+
             ch_Accelerate.RemoveListener(Accelerate);
         }
         void OnPointDown(Vector3 screenPos)
         {
+            isInScan = false;
+            isPullingCard = false;
+
             var card = RaycastCard(screenPos);
-            if (card != null)
+            if (card == null)
             {
-
+                isInScan = true;
+                return;
             }
-
+            if (card.isInCoolDown) 
+            {
+                isInScan = true;
+                ch_onScanCard.Invoke(card);
+                return;
+            }
+            if (!card.characterControl.Data.isPlayer)
+            {
+                isInScan = true;
+                return;
+            }
+            isPullingCard = true;
+            ch_onPullCard.Invoke(card);
+        }
+        void OnPointUp(Vector3 screenPos)
+        {
+            if (isInScan)
+            {
+                isInScan = false;
+                ch_onScanCardEnd.Invoke();
+            }
+            if (isPullingCard)
+            {
+                isPullingCard = false;
+                ch_onPullCardEnd.Invoke();
+            }
+        }
+        void OnDrag(Vector3 start,Vector3 end)
+        {
+            if (isInScan)
+            {
+                var card = RaycastCard(end);
+                if (card != null)
+                {
+                    ch_onScanCard.Invoke(card);
+                }
+                else
+                {
+                    ch_onScanCardEnd.Invoke();
+                }
+            }
+            if (isPullingCard)
+            {
+                ch_onDragCard.Invoke(start, end);
+            }
         }
         MagicCard RaycastCard(Vector3 screenPos)
         {

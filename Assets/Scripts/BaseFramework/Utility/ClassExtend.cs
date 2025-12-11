@@ -13,6 +13,7 @@ namespace BF.Utility
         {
             return new Color(color.r, color.g, color.b, alpha);
         }
+
     }
     public static class Vector3IntExtend
     {
@@ -34,6 +35,10 @@ namespace BF.Utility
         public static bool RotateOrientVertical(this Vector3 orient,Vector3 aimOrient)
         {
             return (orient.x * aimOrient.y - orient.y * aimOrient.x) > 0;
+        }
+        public static Vector3 ResetXY(this Vector3 vector,Vector3 newVector)
+        {
+            return new Vector3(newVector.x, newVector.y, vector.z);
         }
     }
     public static class CameraExtend
