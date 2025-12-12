@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CardOnline.Character
 {
-	public class CharacterCardSystem : MonoBehaviour
+	public class CardLogicSystem : MonoBehaviour
 	{
         [SerializeField] CardAllignment cardAllignment;
         [SerializeField] CoolDownAlligement coolDownAlligement;

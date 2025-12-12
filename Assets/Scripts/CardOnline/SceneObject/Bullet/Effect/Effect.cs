@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace CardOnline.Bullet
 {
-	public class Effect : MonoBehaviour
+	public abstract class Effect : MonoBehaviour
 	{
-		
+		public abstract void Execute();
 	}
 }

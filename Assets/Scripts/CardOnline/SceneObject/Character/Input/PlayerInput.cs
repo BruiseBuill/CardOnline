@@ -25,7 +25,7 @@ namespace CardOnline.Character
 
         CharacterData characterData;
         [SerializeField] CardAllignment cardAllignment;
-        [SerializeField] CharacterCardSystem cardController;
+        [SerializeField] CardLogicSystem cardController;
 
         [SerializeField] float duration = 0.5f;
 

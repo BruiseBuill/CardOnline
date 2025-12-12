@@ -14,7 +14,7 @@ namespace CardOnline.Character
 		[Header("Component")]
 		public CharacterControl characterControl;
 		public CharacterInput characterInput;
-		public CharacterCardSystem characterCardController;
+		public CardLogicSystem characterCardController;
 		public CardAllignment cardAllignment;
 		public CoolDownAlligement coolDownAlligement;
 

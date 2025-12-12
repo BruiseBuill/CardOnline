@@ -19,6 +19,25 @@ namespace CardOnline.Manager
         {
             defenseBullet = bullet;
         }
+		void Calculate()
+		{
+			if (defenseBullet == null || defenseBullet.power < attackBullet.power) 
+			{
+				AttackerWin();
+			}
+			else
+			{
+				DefenserWin();
+			}
 
+		}
+		void AttackerWin()
+		{
+
+		}
+		void DefenserWin()
+		{
+
+		}
     }
 }
