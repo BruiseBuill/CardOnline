@@ -18,7 +18,18 @@ namespace CardOnline.Manager
         public void SetDefenseBullet(BaseBullet bullet)
         {
             defenseBullet = bullet;
+			Calculate();
         }
+		public void DontAttack()
+		{
+
+		}
+		public void DontDefense()
+		{
+			Calculate();
+
+        }
+
 		void Calculate()
 		{
 			if (defenseBullet == null || defenseBullet.power < attackBullet.power) 

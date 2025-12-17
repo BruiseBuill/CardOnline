@@ -48,7 +48,7 @@ namespace CardOnline
             isInScan = false;
             isPullingCard = false;
 
-            var card = RaycastCard(screenPos);
+            var card = PhysicsRaycast.Instance().RaycastCard(screenPos);
             if (card == null)
             {
                 isInScan = true;
@@ -85,7 +85,7 @@ namespace CardOnline
         {
             if (isInScan)
             {
-                var card = RaycastCard(end);
+                var card = PhysicsRaycast.Instance().RaycastCard(end);
                 if (card != null)
                 {
                     ch_onScanCard.Invoke(card);
@@ -98,21 +98,6 @@ namespace CardOnline
             if (isPullingCard)
             {
                 ch_onDragCard.Invoke(start, end);
-            }
-        }
-        MagicCard RaycastCard(Vector3 screenPos)
-        {
-            Ray ray = new Ray(Camera.main.ScreenToWorldPoint(screenPos), Vector3.forward);
-
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, 1 << cardLayer)) 
-            {
-                Collider collider = hitInfo.collider;
-                MagicCard card = collider.GetComponentInParent<MagicCard>();
-                return card;
-            }
-            else
-            {
-                return null;
             }
         }
         public override void Update()

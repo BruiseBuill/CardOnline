@@ -25,7 +25,7 @@ namespace CardOnline.Character
         [SerializeField] private int curveResolution = 50;  // 曲线分辨率
         [SerializeField] private bool showControlPoints = true; // 显示控制点
 
-        public Vector3 GetCentralControlPos()=>(controlPoint1.position+controlPoint2.position)/2;
+       
 
 
 
