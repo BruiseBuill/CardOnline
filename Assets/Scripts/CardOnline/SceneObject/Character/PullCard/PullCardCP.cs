@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BF;
+using CardOnline.Card;
 
 namespace CardOnline.Character
 {
@@ -11,6 +12,7 @@ namespace CardOnline.Character
 
         [SerializeField] bool isAttack;
         [SerializeField] bool isDefense;
+        [SerializeField] CharacterControl target;
 
         protected override void Awake()
         {
@@ -27,9 +29,13 @@ namespace CardOnline.Character
             
         }
 
-        public void Attack()
+        public void Attack(MagicCard card)
         {
-
+            if (target == null)
+            {
+                return;
+            }
+            var bullet = PoolManager.Instance().Release(card.CardData.bulletName);
 
         }
         public void Defense()

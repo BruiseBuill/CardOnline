@@ -11,5 +11,6 @@ namespace CardOnline.Card
         public string power;
         public string coolDown;
         public string description;
+        public string bulletName;
     }
 }
