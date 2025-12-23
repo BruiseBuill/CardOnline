@@ -12,21 +12,26 @@ namespace CardOnline.Manager
 		CharacterControl currentCharacter;
 
 		[Header("Out")]
-		[SerializeField] GenericEventChannel<object> ch_onChangeCharacter;
+		[SerializeField] GenericEventChannel<object> ch_ActionStart;
+		[SerializeField] GenericEventChannel<object> ch_ActionEnd;
 
-		void Start()
+        void Start()
 		{
 			StartGame();
         }
 		void StartGame()
 		{
 			currentCharacter = characterList[0];
-			ch_onChangeCharacter.Invoke(currentCharacter);
+			ch_ActionStart.Invoke(currentCharacter);
         }
 		public void CurrentTurnOver()
 		{
-			currentCharacter = characterList[(characterList.IndexOf(currentCharacter) + 1) % characterList.Count];
-			ch_onChangeCharacter.Invoke(currentCharacter);
+            ch_ActionEnd.Invoke(currentCharacter);
+        }
+		public void StartNextTurn()
+		{
+            currentCharacter = characterList[(characterList.IndexOf(currentCharacter) + 1) % characterList.Count];
+			ch_ActionStart.Invoke(currentCharacter);
         }
     }
 }

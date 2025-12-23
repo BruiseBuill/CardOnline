@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace CardOnline
 {
+    public enum IM_Index { FightActive, FightSilence,Select }
+
     [CreateAssetMenu(fileName = "FightActive", menuName = "CardOnline/Input/FightActive")]
     public class IM_FightActive : Input2ActMode
     {

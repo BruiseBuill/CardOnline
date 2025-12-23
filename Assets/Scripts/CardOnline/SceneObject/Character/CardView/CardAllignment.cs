@@ -25,13 +25,14 @@ namespace CardOnline.Character
         [SerializeField] private int curveResolution = 50;  // 曲线分辨率
         [SerializeField] private bool showControlPoints = true; // 显示控制点
 
-       
-
-
-
-        private void Start()
+        public override void Open()
         {
             UpdateCardPositions();
+        }
+
+        public override void Close()
+        {
+            
         }
         public void AddCard(GameObject card)
         {
@@ -161,5 +162,7 @@ namespace CardOnline.Character
                 }
             }
         }
+
+        
     }
 }

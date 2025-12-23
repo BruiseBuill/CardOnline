@@ -11,7 +11,7 @@ namespace CardOnline.Bullet
 	{
 		public CharacterControl parent;
 		public CharacterControl target;
-		public Transform card;
+		public Transform targetTrans;
         public int power;
 		public bool isAttack;
 
@@ -26,25 +26,25 @@ namespace CardOnline.Bullet
 
 
 
-        void AttackAnimation()
+        public void PlayAttackAnimation()
 		{
-            cardOriginPos = card.position;
-            cardOriginScale = card.localScale;
+            cardOriginPos = targetTrans.position;
+            cardOriginScale = targetTrans.localScale;
 
             Sequence seq = DOTween.Sequence();
 
             // 1. 蓄力：后拉 + 放大
-            seq.Append(card.DOScale(cardOriginScale * 1.1f, prepareDuration))
-               .Join(card.DOMove(card.position - card.right * 40f, prepareDuration)
+            seq.Append(targetTrans.DOScale(cardOriginScale * 1.1f, prepareDuration))
+               .Join(targetTrans.DOMove(targetTrans.position - targetTrans.right * 40f, prepareDuration)
                    .SetEase(Ease.OutQuad));
 
             // 2. 冲刺：高速撞向敌人
-            seq.Append(card.DOMove(target.transform.position, dashDuration)
+            seq.Append(targetTrans.DOMove(target.transform.position, dashDuration)
                    .SetEase(Ease.InBack));
 
             // 3. 收尾：卡牌回原位并恢复
-            seq.Append(card.DOMove(cardOriginPos, 0.2f))
-               .Join(card.DOScale(cardOriginScale, 0.2f));
+            seq.Append(targetTrans.DOMove(cardOriginPos, 0.2f))
+               .Join(targetTrans.DOScale(cardOriginScale, 0.2f));
 
             seq.onComplete += AttackComplete;
 
