@@ -7,12 +7,9 @@ namespace CardOnline.Character
 {
     public class PlayerOuterEventCP : OuterEventCP
     {
-        [SerializeField] EventChannel ch_PlayerActionStart;
 
         protected override void StartAction2()
         {
-            ch_PlayerActionStart.Invoke();
-
             CursorManager.Instance().ChangeAct((int)IM_Index.FightActive);
         }
         protected override void EndAction2()

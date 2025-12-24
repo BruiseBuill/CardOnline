@@ -9,8 +9,8 @@ namespace CardOnline.Character
     {
         CharacterData characterData;
 
-        [SerializeField]protected GenericEventChannel<object> ch_ActionStart;
-        [SerializeField]protected GenericEventChannel<object> ch_ActionEnd;
+        [SerializeField] protected GenericEventChannel<object> ch_ActionStart;
+        [SerializeField] protected GenericEventChannel<object> ch_ActionEnd;
 
         protected override void Awake()
         {
@@ -48,7 +48,7 @@ namespace CardOnline.Character
         }
         protected abstract void StartAction2();
         protected abstract void EndAction2();
-
+        protected abstract void BeHit();
         
 
         

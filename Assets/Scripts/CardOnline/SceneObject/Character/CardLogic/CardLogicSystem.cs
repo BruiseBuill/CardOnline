@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CardOnline.Character
 {
-	public class CardLogicSystem : MonoBehaviour
+	public class CardLogicSystem : BaseComponent
 	{
         [SerializeField] CardAllignment cardAllignment;
         [SerializeField] CoolDownAlligement coolDownAlligement;
@@ -19,19 +19,17 @@ namespace CardOnline.Character
         [SerializeField] List<MagicCard> coolCards_4;
 
         [Header("In_Event")]
-        [SerializeField] EventChannel ch_StartTurn;
-        [SerializeField] EventChannel ch_EndTurn;
-        [SerializeField] GenericEventChannel<int> ch_Accelerate;
-        [SerializeField] EventChannel ch_EndAccelerate;
+        
 
-        private void Start()
+
+        public override void Open()
         {
             ch_StartTurn.AddListener(OnStartTurn);
             ch_EndTurn.AddListener(OnEndTurn);
             ch_Accelerate.AddListener(OnAccelerate);
             ch_EndAccelerate.AddListener(OnEndAccelerate);
         }
-        private void OnDestroy()
+        public override void Close()
         {
             ch_StartTurn.RemoveListener(OnStartTurn);
             ch_EndTurn.RemoveListener(OnEndTurn);
@@ -128,5 +126,7 @@ namespace CardOnline.Character
                     break;
             }
         }
+
+        
     }
 }

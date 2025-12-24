@@ -23,8 +23,8 @@ namespace CardOnline.Character
 		public bool isPlayer;
 
 		[Header("In_Event")]
-		public GenericEventChannel<int> ch_Accelerate;
-		public EventChannel ch_EndAccelerate;
+        [SerializeField] protected GenericEventChannel<object> ch_ActionStart;
+        [SerializeField] protected GenericEventChannel<object> ch_ActionEnd;
 
-	}
+    }
 }
