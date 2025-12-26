@@ -8,7 +8,7 @@ namespace CardOnline.Character
 {
  	public class PullCardCP : BaseComponent
 	{
-        CharacterData characterData;
+        protected CharacterData characterData;
 
         [SerializeField] bool isAttack;
         [SerializeField] bool isDefense;

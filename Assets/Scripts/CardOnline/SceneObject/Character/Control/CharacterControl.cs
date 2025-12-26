@@ -4,6 +4,7 @@ using UnityEngine;
 using BF;
 using System;
 using CardOnline.Card;
+using CardOnline.Bullet;
 
 namespace CardOnline.Character
 {
@@ -13,9 +14,9 @@ namespace CardOnline.Character
 		public CharacterData Data => characterData;
 
 
-		[Header("Event")]
-		public Action<MagicCard> onBeenAccelerate;
-		public Action<MagicCard> onBeenAccelerateArea;
+		//
+		public void OnBeHit(BaseBullet baseBullet) => characterData.onBeHit.Invoke(baseBullet);
+
 
 		protected override void Awake() 
 		{
@@ -31,7 +32,7 @@ namespace CardOnline.Character
 
         public override void Close()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

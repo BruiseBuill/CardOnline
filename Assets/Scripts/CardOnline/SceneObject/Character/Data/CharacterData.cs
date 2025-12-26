@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BF;
+using System;
+using CardOnline.Bullet;
 
 namespace CardOnline.Character
 {
@@ -26,5 +28,7 @@ namespace CardOnline.Character
         [SerializeField] protected GenericEventChannel<object> ch_ActionStart;
         [SerializeField] protected GenericEventChannel<object> ch_ActionEnd;
 
-    }
+		//Inner Event
+		public Action<BaseBullet> onBeHit = delegate { };
+	}
 }

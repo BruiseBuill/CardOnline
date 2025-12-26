@@ -35,6 +35,8 @@ namespace CardOnline.Card
         public bool isInCoolDown = false;
         public int remainCoolingTime;
 
+        CardAniamtion cardAniamtion;
+
         private void Start()
         {
             SetSortingOrder((int)LayerOrder.Model);

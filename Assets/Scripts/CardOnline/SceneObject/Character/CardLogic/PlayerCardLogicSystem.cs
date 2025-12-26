@@ -4,11 +4,8 @@ using UnityEngine;
 
 namespace CardOnline.Character
 {
-	public class AIPullCardCP : PullCardCP
-	{
-		public void SetTarget(CharacterControl target)
-		{
-
-		}
+	public class PlayerCardLogicSystem : CardLogicSystem
+    {
+		
 	}
 }

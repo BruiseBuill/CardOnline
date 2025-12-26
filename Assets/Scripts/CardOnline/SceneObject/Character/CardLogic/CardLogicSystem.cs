@@ -12,29 +12,28 @@ namespace CardOnline.Character
         [SerializeField] CoolDownAlligement coolDownAlligement;
         [SerializeField] int playerIndex = 0;
 
-        [SerializeField] List<MagicCard> handCardsList;
-        [SerializeField] List<MagicCard> coolCards_1;
-        [SerializeField] List<MagicCard> coolCards_2;
-        [SerializeField] List<MagicCard> coolCards_3;
-        [SerializeField] List<MagicCard> coolCards_4;
-
-        [Header("In_Event")]
-        
+        [SerializeField] protected List<MagicCard> handCardsList;
+        [SerializeField] protected List<MagicCard> coolCards_1;
+        [SerializeField] protected List<MagicCard> coolCards_2;
+        [SerializeField] protected List<MagicCard> coolCards_3;
+        [SerializeField] protected List<MagicCard> coolCards_4;
 
 
         public override void Open()
         {
+            /*
             ch_StartTurn.AddListener(OnStartTurn);
             ch_EndTurn.AddListener(OnEndTurn);
             ch_Accelerate.AddListener(OnAccelerate);
-            ch_EndAccelerate.AddListener(OnEndAccelerate);
+            ch_EndAccelerate.AddListener(OnEndAccelerate);*/
         }
         public override void Close()
         {
+            /*
             ch_StartTurn.RemoveListener(OnStartTurn);
             ch_EndTurn.RemoveListener(OnEndTurn);
             ch_Accelerate.RemoveListener(OnAccelerate);
-            ch_EndAccelerate.RemoveListener(OnEndAccelerate);
+            ch_EndAccelerate.RemoveListener(OnEndAccelerate);*/
         }
         void OnStartTurn()
         {
